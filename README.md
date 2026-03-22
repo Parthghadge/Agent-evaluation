@@ -141,9 +141,17 @@ docker-compose up --build
 ## Deployment (Render / Railway / Fly.io)
 
 1. Set `OPENAI_API_KEY` in environment
-2. Use `gunicorn` or `uvicorn` as process; expose port 8000
-3. For Streamlit, deploy as separate service or use Streamlit Cloud
-4. Replace in-memory store with PostgreSQL for persistence
+2. Use `uvicorn` as process; expose port 8000 (or `$PORT` if platform provides it)
+3. For Streamlit: `./scripts/run_streamlit.sh` or `streamlit run ui/streamlit_app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true`
+4. Set `API_BASE` to your API URL (e.g. `https://your-api.onrender.com/api/v1`) so the UI can reach it
+5. Replace in-memory store with PostgreSQL for persistence
+
+### Troubleshooting: Errno 99 "Cannot assign requested address"
+
+- Ensure the server binds to `0.0.0.0`, not `localhost` (`.streamlit/config.toml` does this)
+- Use `--server.address 0.0.0.0 --server.headless true` in the run command
+- If the platform assigns `PORT`, pass `--server.port $PORT`
+- Set `API_BASE` to the full URL of your deployed API (not `localhost`)
 
 ## License
 

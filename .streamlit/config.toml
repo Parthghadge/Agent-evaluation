@@ -1,0 +1,9 @@
+[server]
+# Bind to all interfaces - fixes Errno 99 on deployment
+address = "0.0.0.0"
+headless = true
+enableCORS = false
+enableXsrfProtection = false
+
+[browser]
+gatherUsageStats = false
