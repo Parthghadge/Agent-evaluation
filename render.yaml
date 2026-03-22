@@ -1,0 +1,12 @@
+# Render.com blueprint (optional)
+services:
+  - type: web
+    name: agent-eval-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHONPATH
+        value: /opt/render/project/src
+      - key: OPENAI_API_KEY
+        sync: false
